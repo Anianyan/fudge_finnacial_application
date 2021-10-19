@@ -1,0 +1,12 @@
+{
+    "api": {
+      "port": 3000
+    },
+    "db": {
+      "connection": "mongodb://localhost/ffa",
+      "options": {
+        "useNewUrlParser": true,
+        "useUnifiedTopology": true
+      }
+    }
+  }

@@ -1,25 +1,29 @@
-import express, { Application, Request, Response } from "express";
+import dotenv from 'dotenv';
+import bodyParser from 'body-parser';
+import config from 'config';
+import express from 'express';
 
-const app: Application = express();
-const port = 3000;
+import { mongoInit } from './storages/mongodb';
+dotenv.config();
 
-// Body parsing Middleware
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+mongoInit();
 
-app.get(
-    "/",
-    async (req: Request, res: Response): Promise<Response> => {
-        return res.status(200).send({
-            message: "Hello World!",
-        });
-    }
-);
+import { ErrorHandlerMiddleware } from './middlewares';
 
-try {
-    app.listen(port, (): void => {
-        console.log(`Connected successfully on port ${port}`);
-    });
-} catch (error: any) {
-    console.error(`Error occured: ${error.message}`);
-}
+const apiPort = config.get('api.port');
+
+const app = express();
+
+import { userRouter, postRouter, commentRouter } from './routers';
+
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
+
+app.use('/users', userRouter);
+app.use('/posts', postRouter);
+app.use('/comments', commentRouter);
+
+// app.use(ErrorHandlerMiddleware.handlePathNotFound);
+// app.use(ErrorHandlerMiddleware.handleError);
+
+app.listen(apiPort);
