@@ -1,8 +1,8 @@
 const POST_STATUS = {
-    PUBLISHED: 'published',
-    DRAFT: 'draft'
+  PUBLISHED: 'published',
+  DRAFT: 'draft',
 };
 
 module.exports = {
-    POST_STATUS
-}
+  POST_STATUS,
+};

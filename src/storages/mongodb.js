@@ -16,7 +16,7 @@ const init = () => {
     // eslint-disable-next-line no-console
     console.log('connection opened');
   });
-}
+};
 
 module.exports = {
   init,

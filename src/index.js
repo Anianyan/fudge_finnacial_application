@@ -6,10 +6,10 @@ const express = require('express');
 dotenv.config();
 
 const mongodb = require('./storages/mongodb');
+
 mongodb.init();
 
-
-const ErrorHandlerMiddleware = require('./middlewares');
+const { ErrorHandlerMiddleware } = require('./middlewares');
 
 const apiPort = config.get('api.port');
 
@@ -24,7 +24,7 @@ app.use('/users', userRouter);
 app.use('/posts', postRouter);
 app.use('/comments', commentRouter);
 
-// app.use(ErrorHandlerMiddleware.handlePathNotFound);
-// app.use(ErrorHandlerMiddleware.handleError);
+app.use(ErrorHandlerMiddleware.handlePathNotFound);
+app.use(ErrorHandlerMiddleware.handleError);
 
 app.listen(apiPort);
