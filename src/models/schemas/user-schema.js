@@ -12,7 +12,7 @@ const UserSchema = new Schema({
   },
   isActive: {
     type: Boolean,
-    default: false,
+    default: true,
   },
 }, { timestamps: true });
 

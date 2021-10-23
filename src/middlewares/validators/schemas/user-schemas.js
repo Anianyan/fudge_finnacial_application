@@ -6,6 +6,15 @@ const userIdSchema = Joi.object({
   }),
 });
 
+const UserCreateSchema = Joi.object({
+  body: Joi.object({
+    name: Joi.string(),
+    email: Joi.string().trim().email().required(),
+    isActive: Joi.boolean(),
+  }),
+});
+
 module.exports = {
   userIdSchema,
+  UserCreateSchema,
 };

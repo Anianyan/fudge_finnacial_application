@@ -1,9 +1,9 @@
 const { UserModel } = require('../models');
 
-const getUser = async (req, res, next) => {
+async function getUser(req, res, next) {
   try {
     const { userId } = req.params;
-    const user = await UserModel.findById(userId);
+    const user = await UserModel.fondOne({ _id: userId, isActive: true });
     if (!user) {
       throw new Error('User Not found');
     }
@@ -12,11 +12,36 @@ const getUser = async (req, res, next) => {
   } catch (error) {
     next(error);
   }
-};
+}
 
-const createUser = (req, res, next) => {};
+async function createUser(req, res, next) {
+  try {
+    const { name, email } = req.body;
+    const userWithEmail = await UserModel.findOne({ email });
+    if (userWithEmail) {
+      throw new Error('User Already Exists');
+    }
+    const user = await UserModel.create({ name, email, isActive: true });
 
-const deleteUser = (req, res, next) => {};
+    return res.json(user);
+  } catch (error) {
+    next(error);
+  }
+}
+
+async function deleteUser(req, res, next) {
+  try {
+    const { userId } = req.params;
+    const user = await UserModel.findByIdAndUpdate(userId, { isActive: false });
+    if (!user) {
+      throw new Error('User not found');
+    }
+
+    return res.json('Success');
+  } catch (error) {
+    next(error);
+  }
+}
 
 module.exports = {
   getUser,
