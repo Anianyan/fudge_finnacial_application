@@ -1,10 +1,10 @@
-import config from 'config';
-import mongoose, { CallbackWithoutResult } from 'mongoose';
+const config = require('config');
+const mongoose = require('mongoose');
 
-const connection: string = config.get('db.connection');
-const options: any = config.get('db.options');
+const connection = config.get('db.connection');
+const options = config.get('db.options');
 
-export const mongoInit = () => {
+const init = () => {
   mongoose.connect(connection, options);
 
   mongoose.connection.on('error', (error) => {
@@ -17,3 +17,7 @@ export const mongoInit = () => {
     console.log('connection opened');
   });
 }
+
+module.exports = {
+  init,
+};

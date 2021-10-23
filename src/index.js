@@ -1,20 +1,21 @@
-import dotenv from 'dotenv';
-import bodyParser from 'body-parser';
-import config from 'config';
-import express from 'express';
+const dotenv = require('dotenv');
+const bodyParser = require('body-parser');
+const config = require('config');
+const express = require('express');
 
-import { mongoInit } from './storages/mongodb';
 dotenv.config();
 
-mongoInit();
+const mongodb = require('./storages/mongodb');
+mongodb.init();
 
-import { ErrorHandlerMiddleware } from './middlewares';
+
+const ErrorHandlerMiddleware = require('./middlewares');
 
 const apiPort = config.get('api.port');
 
 const app = express();
 
-import { userRouter, postRouter, commentRouter } from './routers';
+const { userRouter, postRouter, commentRouter } = require('./routers');
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());

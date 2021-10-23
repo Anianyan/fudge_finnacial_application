@@ -1,15 +1,13 @@
-import { NextFunction } from "express";
-
 const { NotFoundError } = require('../errors');
 const { ResponseHandlerUtil } = require('../utils');
 
-export class ErrorHandlerMiddleware {
-  static handlePathNotFound(req: Request, res: Response, next: NextFunction) {
+class ErrorHandlerMiddleware {
+  static handlePathNotFound(req, res, next) {
     return next(new NotFoundError('Path not found.'));
   }
 
   // eslint-disable-next-line no-unused-vars
-  static handleError(error: any, req: Request, res: Response, next: NextFunction) {
+  static handleError(error, req, res, next) {
     // eslint-disable-next-line no-console
     console.log('Error', error.message);
     if (error.customError) {
@@ -32,3 +30,5 @@ export class ErrorHandlerMiddleware {
     });
   }
 }
+
+module.exports = ErrorHandlerMiddleware;

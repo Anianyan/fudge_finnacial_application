@@ -1,10 +1,10 @@
-import mongoose from 'mongoose';
+const mongoose = require('mongoose');
 
 const { POST_STATUS } = require('../../constants');
 
 const { Schema } = mongoose;
 
-export const PostSchema = new Schema({
+const PostSchema = new Schema({
   name: String,
   author: {
 		type: mongoose.Schema.Types.ObjectId,
@@ -22,3 +22,5 @@ export const PostSchema = new Schema({
 		default: POST_STATUS.DRAFT
 	}
 }, { timestamps: true });
+
+module.exports = PostSchema;
