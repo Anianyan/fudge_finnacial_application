@@ -5,8 +5,7 @@ const { POST_STATUS } = require('../../constants');
 const { Schema } = mongoose;
 
 const PostSchema = new Schema({
-  name: String,
-  author: {
+  userId: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User',
     required: true,

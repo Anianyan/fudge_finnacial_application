@@ -1,6 +1,6 @@
 const Joi = require('@hapi/joi');
 
-const userIdSchema = Joi.object({
+const UserIdSchema = Joi.object({
   params: Joi.object({
     userId: Joi.string().hex().length(24),
   }),
@@ -15,6 +15,6 @@ const UserCreateSchema = Joi.object({
 });
 
 module.exports = {
-  userIdSchema,
+  UserIdSchema,
   UserCreateSchema,
 };

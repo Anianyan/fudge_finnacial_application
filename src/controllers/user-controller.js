@@ -1,13 +1,13 @@
+const { NotFoundError } = require('../errors');
 const { UserModel } = require('../models');
 
 async function getUser(req, res, next) {
   try {
     const { userId } = req.params;
-    const user = await UserModel.fondOne({ _id: userId, isActive: true });
+    const user = await UserModel.findOne({ _id: userId, isActive: true });
     if (!user) {
-      throw new Error('User Not found');
+      throw new NotFoundError('User Not found');
     }
-
     return res.json(user);
   } catch (error) {
     next(error);
@@ -19,10 +19,9 @@ async function createUser(req, res, next) {
     const { name, email } = req.body;
     const userWithEmail = await UserModel.findOne({ email });
     if (userWithEmail) {
-      throw new Error('User Already Exists');
+      throw new NotFoundError('User Already Exists');
     }
     const user = await UserModel.create({ name, email, isActive: true });
-
     return res.json(user);
   } catch (error) {
     next(error);
@@ -34,9 +33,8 @@ async function deleteUser(req, res, next) {
     const { userId } = req.params;
     const user = await UserModel.findByIdAndUpdate(userId, { isActive: false });
     if (!user) {
-      throw new Error('User not found');
+      throw new NotFoundError('User not found');
     }
-
     return res.json('Success');
   } catch (error) {
     next(error);
